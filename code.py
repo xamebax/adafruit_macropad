@@ -19,23 +19,16 @@ from adafruit_display_shapes.rect import Rect
 from adafruit_display_text import label
 from adafruit_macropad import MacroPad
 
-from adafruit_led_animation.animation.blink import Blink
-from adafruit_led_animation.color import BLUE
-
-# Keyboard layout -------------------------------------------------------------
+# START Keyboard layout -----------------------------------------------------
 import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keyboard_layout_base import KeyboardLayoutBase
 
-# __repo__ = "https://github.com/Neradoc/Circuitpython_Keyboard_Layouts.git"
-
-# Verbatim copy from keyboard_layout_us, only rewritten the ASCII_TO_KEYCODE
-# table to match the Dvorak keycodes.
+# Layout below is a copy from "https://github.com/Neradoc/Circuitpython_Keyboard_Layouts.git"
 class KeyboardLayout(KeyboardLayoutBase):
     """Map ASCII characters to appropriate keypresses on a standard US PC keyboard.
     Non-ASCII characters and most control characters will raise an exception.
     """
-
     # The ASCII_TO_KEYCODE bytes object is used as a table to maps ASCII 0-127
     # to the corresponding # keycode on a US 104-key keyboard.
     # The user should not normally need to use this table,
@@ -181,7 +174,7 @@ class KeyboardLayout(KeyboardLayoutBase):
         b"\x4c"  # DEL DELETE (called Forward Delete in usb.org document)
     )
 
-
+# END Keyboard layout -----------------------------------------------------
 
 
 # CONFIGURABLES ------------------------
@@ -223,14 +216,9 @@ macropad = MacroPad()
 macropad.display.auto_refresh = False
 macropad.pixels.auto_write = False
 
+# We use the US Dvorak keyboard layout here
 keyboard = Keyboard(usb_hid.devices)
 layout = KeyboardLayout(keyboard)
-
-## set up leds
-pixel_color = [0, 0, 0]
-pixel_increment = 1
-
-## end of set up leds
 
 # Set up displayio group with all the labels
 group = displayio.Group()
@@ -273,7 +261,6 @@ last_position = None
 last_encoder_switch = macropad.encoder_switch_debounced.pressed
 app_index = 0
 apps[app_index].switch()
-
 
 # MAIN LOOP ----------------------------
 
