@@ -1,5 +1,8 @@
 from adafruit_hid.keycode import Keycode
 
+# TODO: Figure out why this doesn't work, neither on Linux nor on MacOS.
+#       It might have something to do with when the keys are unpressed.
+
 app = {
     'name' : 'Google Meet',
     'macros' : [
