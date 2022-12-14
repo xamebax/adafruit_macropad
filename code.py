@@ -318,6 +318,7 @@ class App:
     """ Class representing a host-side application, for which we have a set
         of macro sequences. Project code was originally more complex and
         this was helpful, but maybe it's excessive now?"""
+
     def __init__(self, appdata):
         self.name = appdata['name']
         self.macros = appdata['macros']
@@ -327,7 +328,7 @@ class App:
             colors. """
         group[13].text = self.name   # Application name
         for i in range(12):
-            if i < len(self.macros): # Key in use, set label + LED color
+            if i < len(self.macros):  # Key in use, set label + LED color
                 macropad.pixels[i] = self.macros[i][0]
                 group[i].text = self.macros[i][1]
             else:  # Key not in use, no label or LED
@@ -340,14 +341,13 @@ class App:
         macropad.pixels.show()
         macropad.display.refresh()
 
-
 # INITIALIZATION -----------------------
 
 macropad = MacroPad()
 macropad.display.auto_refresh = False
 macropad.pixels.auto_write = False
 
-# We use the US Dvorak keyboard layout here
+# We use the PL Programmers Dvorak keyboard layout here
 keyboard = Keyboard(usb_hid.devices)
 layout = KeyboardLayout(keyboard)
 
@@ -416,12 +416,12 @@ while True:
         last_encoder_switch = encoder_switch
         if len(apps[app_index].macros) < 13:
             continue    # No 13th macro, just resume main loop
-        key_number = 12 # else process below as 13th macro
+        key_number = 12  # else process below as 13th macro
         pressed = encoder_switch
     else:
         event = macropad.keys.events.get()
         if not event or event.key_number >= len(apps[app_index].macros):
-            continue # No key events, or no corresponding macro, resume loop
+            continue  # No key events, or no corresponding macro, resume loop
         key_number = event.key_number
         pressed = event.pressed
 
@@ -438,7 +438,7 @@ while True:
         # String (e.g. "Foo"): corresponding keys pressed & released
         # List []: one or more Consumer Control codes (can also do float delay)
         # Dict {}: mouse buttons/motion (might extend in future)
-        if key_number < 12: # No pixel for encoder button
+        if key_number < 12:  # No pixel for encoder button
             macropad.pixels[key_number] = 0xFFFFFF
             macropad.pixels.show()
         for item in sequence:
@@ -492,6 +492,6 @@ while True:
                 elif 'tone' in item:
                     macropad.stop_tone()
         macropad.consumer_control.release()
-        if key_number < 12: # No pixel for encoder button
+        if key_number < 12:  # No pixel for encoder button
             macropad.pixels[key_number] = apps[app_index].macros[key_number][0]
             macropad.pixels.show()
