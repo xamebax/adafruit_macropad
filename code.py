@@ -27,13 +27,8 @@ from adafruit_hid.keyboard_layout_base import KeyboardLayoutBase
 # Note: this KeyboardLayout was generated using https://github.com/Neradoc/Circuitpython_Keyboard_Layouts
 # and a modified XML file downloaded from https://kbdlayout.info/KBDDV/download/xml
 # the XML above is for a US Dvorak layout; the layout below is for a Polish Programmer's Dvorak layout.
-# TODO: there are no keycodes available for characters:
-# - " (34/0x22)
-# - ' (39/0x27)
-# - $ (36/0x24)
-# - 'ą' (261/0x105) and other Polish and Norwegian characters (no alt layer)
+# TODO: ValueError: No keycode available for character '\r' (13/0x0d).
 class KeyboardLayout(KeyboardLayoutBase):
-    SHIFT_FLAG = 0x80
     ASCII_TO_KEYCODE = (
         b'\x00'
         b'\x00'
@@ -69,12 +64,12 @@ class KeyboardLayout(KeyboardLayoutBase):
         b'\x00'
         b'\x2c'  # ' '
         b'\x2d'  # '!'
-        b'\x00'
+        b'\x9d'  # '"'
         b'\x2e'  # '#'
-        b'\x00'
+        b'\x35'  # '$'
         b'\x9e'  # '%'
         b'\x1e'  # '&'
-        b'\x00'
+        b'\x1d'  # "'"
         b'\x22'  # '('
         b'\x25'  # ')'
         b'\x24'  # '*'
@@ -164,8 +159,17 @@ class KeyboardLayout(KeyboardLayoutBase):
         b'\xb5'  # '~'
         b'\x00'
     )
-    NEED_ALTGR = ''
+    NEED_ALTGR = 'óąćęłńśźż'
     HIGHER_ASCII = {
+        0x107: 0x0c,  # 'ć'
+        0x142: 0x13,  # 'ł'
+        0x105: 0x04,  # 'ą'
+        0xf3: 0x16,  # 'ó'
+        0x119: 0x07,  # 'ę'
+        0x144: 0x0f,  # 'ń'
+        0x15b: 0x33,  # 'ś'
+        0x17a: 0x37,  # 'ź'
+        0x17c: 0x38,  # 'ż'
     }
     COMBINED_KEYS = {
     }
